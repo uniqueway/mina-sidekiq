@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/devvmh-forks/mina.git
+  revision: b308879c9a446e627b353eadcc532464d2ffc7b7
+  branch: fix/rvm-path
+  specs:
+    mina (1.0.0.beta2)
+      open4 (~> 1.3.4)
+      rake
+
 PATH
   remote: .
   specs:
@@ -10,9 +19,6 @@ GEM
     byebug (9.0.5)
     coderay (1.1.1)
     method_source (0.8.2)
-    mina (0.3.8)
-      open4 (~> 1.3.4)
-      rake
     minitest (5.9.0)
     open4 (1.3.4)
     pry (0.10.4)
@@ -29,6 +35,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  mina!
   mina-sidekiq!
   minitest
   pry-byebug

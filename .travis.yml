@@ -14,4 +14,4 @@ before_install:
   - chmod g-rw,o-rw /home/travis/.ssh/*
 
 install:
-  - bundle install --jobs=3 --retry=3 --deployment
+  - bundle install --jobs=3 --retry=3 --deployment --full-index
