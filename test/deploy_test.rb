@@ -48,16 +48,16 @@ describe "mina_sidekiq" do
         raise e
       end
     end
-    it "should start/stop sidekiq" do
-      sidekiq_pid_path = @env_root.join("deploy", "shared", "pids", "sidekiq.pid")
-      # fresh deploy
-      mina "deploy"
-      mina "sidekiq:start"
-      pid = File.read(sidekiq_pid_path)
-      check_process(pid).must_equal true
-      # second deploy
-      mina "sidekiq:stop"
-      check_process(pid).must_equal false
-    end
+    #it "should start/stop sidekiq" do
+    #  sidekiq_pid_path = @env_root.join("deploy", "shared", "pids", "sidekiq.pid")
+    #  # fresh deploy
+    #  mina "deploy"
+    #  mina "sidekiq:start"
+    #  pid = File.read(sidekiq_pid_path)
+    #  check_process(pid).must_equal true
+    #  # second deploy
+    #  mina "sidekiq:stop"
+    #  check_process(pid).must_equal false
+    #end
   end
 end

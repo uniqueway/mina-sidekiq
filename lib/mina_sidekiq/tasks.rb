@@ -77,14 +77,12 @@ namespace :sidekiq do
   task :quiet => :environment do
     comment 'Quiet sidekiq (stop accepting new work)'
     for_each_process do |pid_file, idx|
-      command %{ \\
-        if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}` > /dev/null 2>&1; then
+      command %{if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}` > /dev/null 2>&1; then
           cd "#{fetch(:current_path)}"
           #{fetch(:sidekiqctl)} quiet #{pid_file}
         else
           echo 'Skip quiet command (no pid file found)'
-        fi \\
-      }
+        fi}
     end
   end
 
@@ -93,14 +91,12 @@ namespace :sidekiq do
   task :stop => :environment do
     comment 'Stop sidekiq'
     for_each_process do |pid_file, idx|
-      command %{ \\
-        if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}`> /dev/null 2>&1; then
+      command %{if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}`> /dev/null 2>&1; then
           cd #{fetch(:current_path)}
           #{fetch(:sidekiqctl)} stop #{pid_file} #{fetch(:sidekiq_timeout)}
         else
           echo 'Skip stopping sidekiq (no pid file found)'
-        fi \\
-      }
+        fi}
     end
   end
 
