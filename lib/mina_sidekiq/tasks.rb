@@ -39,13 +39,13 @@ set :sidekiq_timeout, 11
 
 # ### sidekiq_config
 # Sets the path to the configuration file of sidekiq
-set :sidekiq_config, -> { "#{fetch(:current_path)}/config/sidekiq.yml" }
+set :sidekiq_config, -> { "#{fetch(:project_path)}/config/sidekiq.yml" }
 
 # ### sidekiq_log
 # Sets the path to the log file of sidekiq
 #
 # To disable logging set it to "/dev/null"
-set :sidekiq_log, -> { "#{fetch(:current_path)}/log/sidekiq.log" }
+set :sidekiq_log, -> { "#{fetch(:project_path)}/log/sidekiq.log" }
 
 # ### sidekiq_pid
 # Sets the path to the pid file of a sidekiq worker
@@ -79,7 +79,7 @@ namespace :sidekiq do
     for_each_process do |pid_file, idx|
       command %{
         if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}` > /dev/null 2>&1; then
-          cd "#{fetch(:current_path)}"
+          cd "#{fetch(:project_path)}"
           #{fetch(:sidekiqctl)} quiet #{pid_file}
         else
           echo 'Skip quiet command (no pid file found)'
@@ -95,7 +95,7 @@ namespace :sidekiq do
     for_each_process do |pid_file, idx|
       command %{
         if [ -f #{pid_file} ] && kill -0 `cat #{pid_file}`> /dev/null 2>&1; then
-          cd #{fetch(:current_path)}
+          cd #{fetch(:project_path)}
           #{fetch(:sidekiqctl)} stop #{pid_file} #{fetch(:sidekiq_timeout)}
         else
           echo 'Skip stopping sidekiq (no pid file found)'
@@ -115,7 +115,7 @@ namespace :sidekiq do
                         else
                           "-c #{sidekiq_concurrency}"
                         end
-      in_path(fetch(:current_path)) do
+      in_path(fetch(:project_path)) do
         command %[#{fetch(:sidekiq)} -d -e #{fetch(:rails_env)} #{concurrency_arg} -C #{fetch(:sidekiq_config)} -i #{idx} -P #{pid_file} -L #{fetch(:sidekiq_log)}]
       end
     end
